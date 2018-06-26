@@ -1,3 +1,21 @@
+# AGLDWG LDSpider
+This is a fork of the [ldspider](https://github.com/ldspider/ldspider) Linked Data internet bot that is being tuned to crawl the 'Australian' Linked Data Web.
+
+The following information, other than **Contacts** is from the original ldspider codebase.
+
+## Contacts
+**Grant Burgess**  
+*Lead Developer*  
+Griffith University Industrial Placement Student at CSIRO Land & Water  
+<grantrburgess@outlook.com>
+
+**Nicholas Car**  
+*Product Owner*  
+Senior Experimental Scientist  
+CSIRO Land & Water  
+<nicholas.car@csiro.au>
+
+
 ## Introduction ##
 
 The **LDSpider** project provides a web crawling framework for the Linked Data web.
