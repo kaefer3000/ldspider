@@ -7,7 +7,7 @@ The following information, other than **Contacts** is from the original ldspider
 **Grant Burgess**  
 *Lead Developer*  
 Griffith University Industrial Placement Student at CSIRO Land & Water  
-<grantrburgess@outlook.com>
+<grant.burgess@griffithuni.edu.au>
 
 **Nicholas Car**  
 *Product Owner*  
@@ -64,7 +64,6 @@ Sign up to the [LDSpider mailing list](http://groups.google.com/group/ldspider/)
 ### Acknowledgements ###
 
 ![YourKit logo](https://www.yourkit.com/images/yklogo.png) YourKit supports open source projects with its full-featured Java Profiler.
-YourKit, LLC is the creator of [YourKit Java Profiler](https://www.yourkit.com/java/profiler/index.jsp) and [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/index.jsp), innovative and intelligent tools for profiling Java and .NET applications. 
+YourKit, LLC is the creator of [YourKit Java Profiler](https://www.yourkit.com/java/profiler/index.jsp) and [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/index.jsp), innovative and intelligent tools for profiling Java and .NET applications.
 
 <!-- &lt;wiki:gadget url="http://www.ohloh.net/p/gwt/widgets/project\_users.xml" height="100" border="0" /&gt; -->
-
