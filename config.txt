@@ -1,0 +1,49 @@
+#	Author: Grant Burgess
+#	Date: 17/07/18
+#	Purpose: List of all commands used to implement the ldspider
+
+#	Server Update
+sudo apt-get update
+sudo apt-get upgrade
+sudo timedatect1 set-timezone Australia/Brisbane
+
+#	Java Install
+sudo apt-get install default-jdk
+
+#	Github Initialization and Clone
+git init
+sudo git config --global user.name "xxxxxxxxxxx"
+sudo git config --global user.email "xxxxxxxxxxx"
+sudo git clone https://github.com/AGLDWG/ldspider.git
+
+#	Environment variables
+sudo sh -c 'echo "JAVA_HOME=\"/usr/lib/jvm/default-java\"" >> /etc/environment'
+sudo sh -c 'echo "TOMCAT_HOME=\"/var/lib/tomcat7/\"" >> /etc/environment'
+sudo sh -c 'echo "CATALINA_HOME=\"/usr/share/tomcat7\"" >> /etc/environment'
+sudo sh -c 'echo "CATALINA_BASE=\"/var/lib/tomcat7/\"" >> /etc/environment'
+
+#	Tomcast Install
+sudo apt install -y tomcat7
+sudo apt install -y tomcat7-admin
+# Grab tomcat-users.xml and move it to /var/lib/tomcat7/conf
+# https://github.com/nicholascar/fuseki-tomcat-install/blob/master/tomcat-users.xml
+sudo service tomcat 7 restart
+
+#	Jena-Fuseki Install
+wget http://www-us.apache.org/dist/jena/binaries/apache-jena-fuseki-3.8.0.tar.gz
+tar -xzf apache-jena-fuseki-3.8.0.tar.gz
+sudo mkdir /etc/fuseki
+sudo chown -R tomcat7 /etc/fuseki
+sudo cp apache-jena-fuseki-3.8.0/fuseki.war /var/lib/tomcat7/webapps/
+sudo vim /etc/fuseki/shiro.ini
+# Under [Users] ldspider = password, admin
+# Under [Roles] admin = 8
+sudo vim /etc/default/tomcat7
+# Change JAVA_OPTS="-Djava.awt.headless=true -Xmx256m -XX:+UseConcMarkSweepGC"
+rm apache-jena-fuseki-3.8.0.tar.gz
+
+# 	Mapping port 80 to 8080 to enable Tomcat to run on port 80 for AWS
+sudo /sbin/iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+sudo /sbin/iptables -A INPUT -i eth0 -p tcp --dport 8080 -j ACCEPT
+sudo /sbin/iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+
