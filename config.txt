@@ -36,8 +36,8 @@ sudo mkdir /etc/fuseki
 sudo chown -R tomcat7 /etc/fuseki
 sudo cp apache-jena-fuseki-3.8.0/fuseki.war /var/lib/tomcat7/webapps/
 sudo vim /etc/fuseki/shiro.ini
-# Under [Users] ldspider = password, admin
-# Under [Roles] admin = 8
+# Under [Users] username = password, role (username, password and role are user definable)
+# Under [Roles] admin = * (any roles can be created, * issues administrator priviledges)
 sudo vim /etc/default/tomcat7
 # Change JAVA_OPTS="-Djava.awt.headless=true -Xmx256m -XX:+UseConcMarkSweepGC"
 rm apache-jena-fuseki-3.8.0.tar.gz
