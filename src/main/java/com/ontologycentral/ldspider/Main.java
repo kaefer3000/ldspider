@@ -3,17 +3,22 @@ package com.ontologycentral.ldspider;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -48,7 +53,8 @@ import org.semanticweb.yars.nx.Resource;
 import org.semanticweb.yars.nx.parser.Callback;
 import org.semanticweb.yars.nx.parser.NxParser;
 import org.semanticweb.yars.util.CallbackNxAppender;
-import org.semanticweb.yars.util.CallbackNxOutputStream;
+//import org.semanticweb.yars.util.CallbackNxOutputStream; depreciated, replaced with CallbackNXBufferedWriter
+import org.semanticweb.yars.util.CallbackNxBufferedWriter;
 import org.semanticweb.yars.util.Node2uriConvertingIterator;
 import org.semanticweb.yars.util.PleaseCloseTheDoorWhenYouLeaveIterator;
 
@@ -419,7 +425,7 @@ public class Main {
 			headerTreatment = Headers.Treatment.DUMP;
 
 		Sink sink;
-		OutputStream os = System.out;
+		BufferedWriter os = new BufferedWriter(new OutputStreamWriter(System.out));
 		Callback cbData = null;
 		Callback cbHeader = null;
 		
@@ -435,19 +441,19 @@ public class Main {
 							new HopwiseSplittingFileOutputter(path));
 				else {
 					if (path.endsWith(".gz"))
-						os = new BufferedOutputStream(new GZIPOutputStream(
-								new FileOutputStream(path)));
+						os = new BufferedWriter(new OutputStreamWriter
+							(new GZIPOutputStream(new FileOutputStream(path))));
 					else
-						os = new BufferedOutputStream(
-								new FileOutputStream(path));
+						os = new BufferedWriter(
+								new FileWriter(path));
 					CrawlerConstants.CLOSER.add(os);
 				}
 			}
 
 			if (cbData == null)
-				cbData = new CallbackNxOutputStream(os, false);
+				cbData = new CallbackNxBufferedWriter(os, false);
 
-			OutputStream headerOS = null;
+			BufferedWriter headerOS = null;
 
 			if (headerTreatment == Headers.Treatment.DUMP) {
 				String path = cmd.getOptionValue("dh");
@@ -455,9 +461,9 @@ public class Main {
 					cbHeader = new CallbackNxAppender(
 							new HopwiseSplittingFileOutputter(path));
 				else {
-					headerOS = new FileOutputStream(path);
-					cbHeader = new CallbackNxOutputStream(
-							new BufferedOutputStream(headerOS), false);
+					headerOS = new BufferedWriter(new FileWriter(path));
+					cbHeader = new CallbackNxBufferedWriter(
+							new BufferedWriter(headerOS), false);
 				}
 			}
 			if (headerOS != null)
@@ -519,12 +525,14 @@ public class Main {
 				rcb = new CallbackNxAppender(new HopwiseSplittingFileOutputter(
 						cmd.getOptionValue("r"), true));
 			} else {
-				OutputStream ros = cmd.getOptionValue("r").endsWith(".gz") ? new GZIPOutputStream(
-						new FileOutputStream(cmd.getOptionValue("r")))
-						: new FileOutputStream(cmd.getOptionValue("r"));
-				OutputStream fos = new BufferedOutputStream(ros);
+				BufferedWriter ros = cmd.getOptionValue("r").endsWith(".gz") ? new BufferedWriter(
+						new OutputStreamWriter( new GZIPOutputStream(
+						new FileOutputStream(cmd.getOptionValue("r")))))
+						: new BufferedWriter( new OutputStreamWriter( 
+							new FileOutputStream(cmd.getOptionValue("r"))));
+				BufferedWriter fos = new BufferedWriter(ros);
 				CrawlerConstants.CLOSER.add(fos);
-				rcb = new CallbackNxOutputStream(fos, false);
+				rcb = new CallbackNxBufferedWriter(fos, false);
 			}
 			rcb.startDocument();
 		}
