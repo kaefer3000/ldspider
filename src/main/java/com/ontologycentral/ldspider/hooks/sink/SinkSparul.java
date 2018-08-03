@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.semanticweb.yars.nx.Node;
 import org.semanticweb.yars.nx.parser.Callback;
 
+import com.ontologycentral.ldspider.CrawlerConstants;
 import com.ontologycentral.ldspider.http.Headers;
 
 /**
@@ -134,13 +135,15 @@ public class SinkSparul implements Sink {
 			//SPARUL Requests	
 			String provUri = URLEncoder.encode(_prov.getUri().toString(), "UTF-8");
 			String graphUri = _graphUri != null ? _graphUri : provUri;
-
-			_writer.write("query=");
+			// _writer.write("query=); Suspect this is what is causing the Http 400 error
+			_writer.write("update=");
 			if(newGraph) {
-				_writer.write("CREATE+SILENT+GRAPH+%3C" + graphUri + "%3E+");
+				//_writer.write("CREATE+SILENT+GRAPH+%3C" + graphUri + "%3E+");
+				_writer.write("CREATE+GRAPH+%3C" + graphUri + "%3E+%3B+");
 			}
-			_writer.write("INSERT+DATA+INTO+%3C" + graphUri + "%3E+%7B");
-
+			//_writer.write("INSERT+DATA+INTO+%3C" + graphUri + "%3E+%7B");
+			_writer.write("INSERT%20DATA%20%7B%20GRAPH%20%3C"+ graphUri +"%3E%20%7B%20"); 
+			
 			//Write provenance data
 			if(_includeProvenance) {
 				Headers.processHeaders(_prov.getUri(), _prov.getHttpStatus(), _prov.getHttpHeaders(), this);
@@ -159,7 +162,8 @@ public class SinkSparul implements Sink {
 			if(nodes == null) throw new NullPointerException("nodes must not be null");
 			if(nodes.length < 3) throw new IllegalArgumentException("A statement must consist of at least 3 nodes");
 
-			_writer.write(URLEncoder.encode(nodes[0].toN3() + " " + nodes[1].toN3() + " " + nodes[2].toN3() + " .\n", "UTF-8"));
+			//_writer.write(URLEncoder.encode(nodes[0].toN3() + " " + nodes[1].toN3() + " " + nodes[2].toN3() + " .\n", "UTF-8"));
+			encapsulateNodes(nodes);
 			_statements++;
 		}
 
@@ -173,7 +177,8 @@ public class SinkSparul implements Sink {
 			if(_connection == null) return;
 
 			//End request
-			_writer.write("%7D");
+			//_writer.write("%7D");
+			_writer.write("%7D+%7D");
 			_writer.close();
 
 			//Check response
@@ -200,6 +205,25 @@ public class SinkSparul implements Sink {
 
 			_connection = null;
 			_writer = null;
+		}
+		//! Encapsulates blank nodes
+		//! \param[in] nodes The nodes to encapsulate
+		private void encapsulateNodes(Node[] nodes) throws IOException {			
+			StringBuilder out = new StringBuilder();
+			for (int i = 0; i < 3; i++)
+			{
+				if (nodes[i].toN3().startsWith("_:"))					
+				{					
+					out.append(CrawlerConstants.PREPEND + nodes[i].toN3() + CrawlerConstants.APPEND);
+				}				
+				else
+				{
+					out.append(nodes[i].toN3());
+				}
+			}
+			out.append(" . \n");
+			//output_.append(out.toString());
+			_writer.write(URLEncoder.encode(out.toString(), "UTF-8"));
 		}
 	}
 }

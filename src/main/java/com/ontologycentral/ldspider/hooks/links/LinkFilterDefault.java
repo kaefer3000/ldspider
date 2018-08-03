@@ -113,6 +113,13 @@ public class LinkFilterDefault implements LinkFilter {
 				for (String s : CrawlerConstants.SITES_NO_RDF) {
 					if (u.getHost() != null && u.getHost().contains(s)) {
 						add = false;
+					} 
+				// if -au flag, does not end in .au, or ends in port and does not contain .au, throw out
+					else if ((CrawlerConstants.AU_WHITELIST == true)
+						&& ((u.getAuthority().endsWith(".au") == false)
+						|| ((u.getAuthority().endsWith(String.valueOf(u.getPort())) == true)
+						&& (u.getAuthority().contains(".au") == false)))) { 	
+						add = false;						
 					}
 				}
 				if (add) {
