@@ -12,7 +12,7 @@ import com.ontologycentral.ldspider.frontier.Frontier;
 
 /**
  * Add only uris with matching host to queue
- * @@@ Should be pld-level not host-level.
+ * Should be pld-level not host-level.
  * 
  * @author aharth
  *
