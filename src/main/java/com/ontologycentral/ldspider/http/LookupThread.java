@@ -201,7 +201,7 @@ public class LookupThread extends Thread {
 					hget.abort();
 					_log.warning("Exception " + e.getClass().getName() + " " + lu);
 					_eh.handleError(lu, e);
-				}
+				}	
 				
 				time3 = System.currentTimeMillis();
 				

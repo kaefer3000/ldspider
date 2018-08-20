@@ -106,7 +106,7 @@ public class SinkSparul implements Sink {
 		public void endDocument() {
 			try {
 				endSparql();
-				closeWriter();
+				//closeWriter();
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);
@@ -181,6 +181,7 @@ public class SinkSparul implements Sink {
 			//_writer.write("%7D");
 			_writer.write("%7D+%7D");
 			_writer.flush();
+			_writer.close();
 			
 			//Check response
 			if(_connection.getResponseCode() == 200) {
@@ -208,11 +209,6 @@ public class SinkSparul implements Sink {
 			_writer = null;
 		}
 		
-		// Closing the writer in a seperate method
-		public void closeWriter() throws IOException {
-			_writer.close();
-		}
-
 		//! Encapsulates blank nodes
 		//! \param[in] nodes The nodes to encapsulate
 		private void encapsulateNodes(Node[] nodes) throws IOException {			
