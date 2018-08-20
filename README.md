@@ -1,3 +1,21 @@
+# AGLDWG LDSpider
+This is a fork of the [ldspider](https://github.com/ldspider/ldspider) Linked Data internet bot that is being tuned to crawl the 'Australian' Linked Data Web.
+
+The following information, other than **Contacts** is from the original ldspider codebase.
+
+## Contacts
+**Grant Burgess**  
+*Lead Developer*  
+Griffith University Industrial Placement Student at CSIRO Land & Water  
+<grant.burgess@griffithuni.edu.au>
+
+**Nicholas Car**  
+*Product Owner*  
+Senior Experimental Scientist  
+CSIRO Land & Water  
+<nicholas.car@csiro.au>
+
+
 ## Introduction ##
 
 The **LDSpider** project provides a web crawling framework for the Linked Data web.
@@ -46,7 +64,6 @@ Sign up to the [LDSpider mailing list](http://groups.google.com/group/ldspider/)
 ### Acknowledgements ###
 
 ![YourKit logo](https://www.yourkit.com/images/yklogo.png) YourKit supports open source projects with its full-featured Java Profiler.
-YourKit, LLC is the creator of [YourKit Java Profiler](https://www.yourkit.com/java/profiler/index.jsp) and [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/index.jsp), innovative and intelligent tools for profiling Java and .NET applications. 
+YourKit, LLC is the creator of [YourKit Java Profiler](https://www.yourkit.com/java/profiler/index.jsp) and [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/index.jsp), innovative and intelligent tools for profiling Java and .NET applications.
 
 <!-- &lt;wiki:gadget url="http://www.ohloh.net/p/gwt/widgets/project\_users.xml" height="100" border="0" /&gt; -->
-

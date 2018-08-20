@@ -18,17 +18,22 @@ public class CrawlerConstants {
 	
 	// http://www.w3.org/TR/owl-ref/#MIMEType
 	public static String[] MIMETYPES = { "application/rdf+xml", "application/xml" };
-	public static String[] FILESUFFIXES = { ".rdf", ".owl" };
+	public static String[] FILESUFFIXES = { ".rdf", ".owl", ".rdfs" };
 	
 	public static final Header[] HEADERS = {
 		new BasicHeader("Accept", MIMETYPES[0] + ", " + MIMETYPES[1]),
 		new BasicHeader("User-Agent", USERAGENT_LINE),
 		new BasicHeader("Accept-Encoding", "gzip")
 	};
+
+	public static boolean AU_WHITELIST = false;
+
+	public static String[] SUFFIX_BLACKLIST = { ".fr", ".de" };
 	
 	public static String[] BLACKLIST = { ".txt", ".html", ".xhtml", ".json", ".ttl", ".nt", ".jpg", ".pdf", ".htm", ".png", ".jpeg", ".gif" };
-
+	
 	public static String[] SITES_NO_RDF = { "wikipedia.org", "wikimedia.org", "slideshare.net", "imdb.com", "twimg.com", "dblp.uni-trier.de", "flickr.com", "amazon.com", "last.fm" };
+	//public static String[] SITES_NO_RDF;
 
 	public static String[] SITES_SLOW = { "l3s.de", "semantictweet.com", "kaufkauf.net", "rpi.edu", "uniprot.org", "geonames.org", "dbtune" };
 	public static final int SLOW_DIV = 20;
@@ -49,7 +54,9 @@ public class CrawlerConstants {
 	public static final int DEFAULT_NB_THREADS = 2;
 	public static final int DEFAULT_NB_ROUNDS = 2;
 	public static final int DEFAULT_NB_URIS = Integer.MAX_VALUE;
-	
+	public static final char PREPEND = '<';
+	public static final char APPEND = '>';	
+
 	// avoid hammering plds
 	public static long MIN_DELAY = 500;
 	// for bfs queue: max time after plds get re-visited

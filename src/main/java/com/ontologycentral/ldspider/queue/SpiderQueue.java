@@ -166,7 +166,7 @@ public abstract class SpiderQueue implements Serializable{
 
 	/**
 	 * Getter for the Seen instance of this queue.
-	 * @return
+	 * @return _seen
 	 */
 	public Seen getSeen() {
 		return _seen;

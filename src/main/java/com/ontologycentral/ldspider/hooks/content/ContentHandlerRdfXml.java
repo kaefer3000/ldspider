@@ -6,6 +6,9 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.IOUtils;
+import java.nio.charset.StandardCharsets;
+import org.apache.commons.io.input.BOMInputStream;
 import org.semanticweb.yars.nx.Resource;
 import org.semanticweb.yars.nx.parser.Callback;
 import org.semanticweb.yars.nx.parser.ParseException;
@@ -34,6 +37,14 @@ public class ContentHandlerRdfXml implements ContentHandler {
 
 	public boolean handle(URI uri, String mime, InputStream source, Callback callback) {
 		try {
+//			String result = IOUtils.toString(source, StandardCharsets.UTF_8);	
+//			_log.log(Level.INFO, "Stream dump", result);
+//			System.out.println(result);
+//			System.out.println("End result");			
+//			BOMInputStream bis = new BOMInputStream(source);
+//			if (bis.hasBOM()) {
+//				bis.skip(bis.getBOM().length()-2);
+//			}
 			RDFXMLParser r = new RDFXMLParser(source, true, true, uri.toString(), callback, new Resource(NxUtil.escapeForNx(uri.toString())));
 //			RDFXMLParser r = new RDFXMLParser(source, true, false, uri.toString());
 //			while (r.hasNext()) {
@@ -41,7 +52,7 @@ public class ContentHandlerRdfXml implements ContentHandler {
 //				
 //				callback.processStatement(nx);
 //				
-//				//_log.info("processing " + Nodes.toN3(nx));
+//				_log.info("processing " + Nodes.toN3(nx));
 //			}
 			//, callback, new Resource(uri.toString()))
 			
@@ -52,6 +63,9 @@ public class ContentHandlerRdfXml implements ContentHandler {
 		} catch (IOException e) {
 			_log.log(Level.WARNING, "Could not read document", e);
 			return false;
+//		} catch (NullPointerException e) {
+//			_log.log(Level.WARNING, "Could not read document", e);
+//			return false;
 		}
 	}
 	

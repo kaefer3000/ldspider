@@ -340,6 +340,9 @@ public class Crawler {
 				} catch (IllegalAccessException e) {
 					_log.info("IllegalAccessException. Using dummy.");
 					r = new DummyRedirects();
+				} catch (java.lang.NullPointerException e) {
+					_log.info("NullPointerException. Using dummy.");
+					r = new DummyRedirects();
 				}
 			_queue = new LoadBalancingQueue(_tldm, r, seen);
 		} else {
@@ -408,10 +411,13 @@ public class Crawler {
 		try {
 			r = _redirsClass.newInstance();
 		} catch (InstantiationException e) {
-			_log.info("IllegalAccessException. Using dummy.");
+			_log.info("InstantiationException. Using dummy.");
 			r = new DummyRedirects();
 		} catch (IllegalAccessException e) {
 			_log.info("IllegalAccessException. Using dummy.");
+			r = new DummyRedirects();
+		} catch (NullPointerException e) {
+			_log.info("NullPointerException. Using dummy.");
 			r = new DummyRedirects();
 		}
 

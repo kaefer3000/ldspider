@@ -55,7 +55,7 @@ public class LoadBalancingQueue extends RedirectsFavouringSpiderQueue {
 	/**
 	 * Put URIs from frontier to queue
 	 * 
-	 * @param maxuris - cut off number of uris per pld
+	 * cut off number of uris per pld
 	 */
 	public synchronized void schedule(Frontier f) {	
 		_log.info("start scheduling depth " + _depth++ + "...");
